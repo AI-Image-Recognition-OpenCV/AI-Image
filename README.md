@@ -14,3 +14,9 @@ def text_to_speech(text, lang='ko'):
 
     pygame.mixer.quit()
     os.remove(filename)
+이 함수는 주어진 텍스트를 음성으로 변환하고 이를 재생하는 기능을 합니다.
+
+*gTTS를 사용하여 텍스트를 음성으로 변환.
+*변환된 음성을 임시 파일(temp.mp3)로 저장.
+*pygame.mixer를 사용하여 음성을 재생.
+*음성이 재생되는 동안 대기하고, 재생이 끝나면 리소스를 정리하고 임시 파일을 삭제.
