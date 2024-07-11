@@ -17,7 +17,7 @@ import cv2
 import numpy as np
 import pyttsx3
 
-# Function for YOLO object detection
+#YOLO 객체 감지 함수
 def yoloNet(image, net, output_layers, CONF_VALUE=0.5):
     (h, w) = image.shape[:2]
     blob = cv2.dnn.blobFromImage(image, 0.00392, (416, 416), swapRB=True, crop=False)
@@ -35,7 +35,7 @@ def yoloNet(image, net, output_layers, CONF_VALUE=0.5):
             scores = detection[5:]
             class_id = np.argmax(scores)
             confidence = scores[class_id]
-            if confidence > CONF_VALUE and class_id == 0:  # Only detect persons (class_id == 0 for COCO dataset)
+            if confidence > CONF_VALUE and class_id == 0:  # COCO 데이터셋에서 사람의 class_id는 0입니다
                 persons_detected = True
                 center_x = int(detection[0] * w)
                 center_y = int(detection[1] * h)
@@ -53,7 +53,7 @@ def yoloNet(image, net, output_layers, CONF_VALUE=0.5):
         if i in indexes:
             x, y, w, h = boxes[i]
             label = f"Person: {confidences[i]:.2f}"
-            color = (0, 255, 0)  # Green color for persons
+            color = (0, 255, 0)  # 사람의 경우 초록색 사각형
             cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
             cv2.putText(image, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
@@ -62,43 +62,43 @@ def yoloNet(image, net, output_layers, CONF_VALUE=0.5):
 
     return image
 
-# Function for text to speech
+#텍스트를 음성으로 변환하는 함수
 def texttospeech(text):
-    # pyttsx3 engine initialization
+    # pyttsx3 엔진 초기화
     engine = pyttsx3.init()
 
-    # Adjusting properties (rate, volume, voice)
+    # 속성 조정 (속도, 볼륨, 목소리)
     rate = engine.getProperty('rate')
     engine.setProperty('rate', rate - 50)
     volume = engine.getProperty('volume')
     engine.setProperty('volume', volume + 0.25)
 
-    # Setting Korean voice (may vary depending on the system)
+    # 한국어 목소리 설정 (시스템에 따라 다를 수 있음)
     voices = engine.getProperty('voices')
     for voice in voices:
-        if 'ko' in voice.id:  # Finding Korean voice
+        if 'ko' in voice.id:  # 한국어 목소리 찾기
             engine.setProperty('voice', voice.id)
             break
 
-    # Converting text to speech
+    # 텍스트를 음성으로 변환
     engine.say(text)
     engine.runAndWait()
 
-# Load YOLO model and initialize parameters
+#YOLO 모델 로드 및 파라미터 초기화
 yolo_weights = 'yolov3.weights'
 yolo_cfg = 'yolov3.cfg'
 net = cv2.dnn.readNetFromDarknet(yolo_cfg, yolo_weights)
 layer_names = net.getLayerNames()
 output_layers_indexes = net.getUnconnectedOutLayers()
 
-# Get the names of the output layers
+#출력 레이어 이름 가져오기
 output_layers = [layer_names[i - 1] for i in output_layers_indexes]
 
-# Video file paths (should be different videos)
+#비디오 파일 경로 (다른 비디오 파일이어야 함)
 filename1 = 'images(DL)/2.mp4'
 filename2 = 'images(DL)/2.mp4'
 
-# Open two video captures
+#두 개의 비디오 캡처 열기
 cap1 = cv2.VideoCapture(filename1)
 cap2 = cv2.VideoCapture(filename2)
 
@@ -106,12 +106,12 @@ if not cap1.isOpened() or not cap2.isOpened():
     print("Error: Could not open video.")
     exit()
 
-# Frame skip value
+#프레임 스킵 값
 frame_skip = 2
 frame_count = 0
 last_combined_frame = None
 
-# Loop through frames
+#프레임 루프
 while True:
     ret1, frame1 = cap1.read()
     ret2, frame2 = cap2.read()
@@ -120,32 +120,32 @@ while True:
 
     frame_count += 1
     if frame_count % frame_skip == 0:
-        # Resize the frames to improve processing speed
+        # 처리 속도를 높이기 위해 프레임 크기 조정
         small_frame1 = cv2.resize(frame1, (640, 480))
         small_frame2 = cv2.resize(frame2, (640, 480))
 
-        # Perform YOLO object detection on the second frame
+        # 두 번째 프레임에 YOLO 객체 감지 수행
         detected_frame = yoloNet(small_frame2, net, output_layers)
 
-        # Combine the original and detected frames vertically
+        # 원본과 감지된 프레임을 수직으로 결합
         combined_frame = np.vstack((small_frame1, detected_frame))
 
-        # Display the combined frame
+        # 결합된 프레임 표시
         cv2.imshow('Original (top) and Object Detection (bottom)', combined_frame)
-        last_combined_frame = combined_frame  # Save the last processed frame
+        last_combined_frame = combined_frame  # 마지막으로 처리된 프레임 저장
 
-    # Exit if spacebar is pressed
+    # 스페이스바가 눌리면 종료
     if cv2.waitKey(1) & 0xFF == ord(' '):
         break
 
-# If the video ends, keep showing the last frame
+#비디오가 끝나면 마지막 프레임 계속 표시
 if last_combined_frame is not None:
     while True:
         cv2.imshow('Original (top) and Object Detection (bottom)', last_combined_frame)
         if cv2.waitKey(1) & 0xFF == ord(' '):
             break
 
-# Release resources
+#리소스 해제
 cap1.release()
 cap2.release()
 cv2.destroyAllWindows()
