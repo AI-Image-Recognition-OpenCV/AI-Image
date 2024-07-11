@@ -14,6 +14,7 @@
 + Yolov3
     * yolov3.weights : YOLOv3 모델의 학습된 가중치를 포함.
     * yolov3.cfg : YOLOv3 모델의 아키텍처를 정의.
+# final(end).py 코드 해석
 ```
 import cv2
 import numpy as np
