@@ -90,6 +90,7 @@ def texttospeech(text):
     engine.say(text)
     engine.runAndWait()
 ```
+ pyttsx3를 초기화하여 한국어 음성으로 텍스트를 변환하고 출력합니다. 목소리 속도와 볼륨을 조정하는 기능이 있습니다. 시스템에 따라 다른 한국어 목소리를 선택할 수 있습니다.
 ```
 #YOLO 모델 로드 및 파라미터 초기화
 yolo_weights = 'yolov3.weights'
