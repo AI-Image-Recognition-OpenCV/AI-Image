@@ -26,6 +26,7 @@ def yoloNet(image, net, output_layers, CONF_VALUE=0.5):
     net.setInput(blob)
     outs = net.forward(output_layers)
 ```
+이미지를 YOLO 네트워크가 처리할 수 있는 형태로 변환하고, 네트워크를 통해 객체를 감지합니다. 감지된 결과는 outs 변수에 저장됩니다. 이후 단계에서는 이 결과를 해석하여 이미지에서 객체를 표시하거나 다른 처리를 수행할 수 있습니다.
 ```
     persons_detected = False
 
