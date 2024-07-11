@@ -99,6 +99,11 @@ net = cv2.dnn.readNetFromDarknet(yolo_cfg, yolo_weights)
 layer_names = net.getLayerNames()
 output_layers_indexes = net.getUnconnectedOutLayers()
 ```
+위 코드는 YOLOv3 모델을 로드하고 초기화하는 과정을 요약한 것입니다:
+
+1.yolo_weights와 yolo_cfg는 YOLOv3 모델의 가중치 파일과 설정 파일을 지정합니다.
+2.cv2.dnn.readNetFromDarknet(yolo_cfg, yolo_weights)을 사용하여 Darknet 형식의 YOLOv3 모델을 로드합니다.
+3.net.getLayerNames()를 통해 네트워크의 모든 레이어 이름을 가져오고, net.getUnconnectedOutLayers()로 출력 레이어의 인덱스를 가져옵니다.
 ```
 #출력 레이어 이름 가져오기
 output_layers = [layer_names[i - 1] for i in output_layers_indexes]
