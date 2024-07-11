@@ -29,3 +29,15 @@ def text_to_speech(text, lang='ko'):
 4.음성이 재생되는 동안 대기하고, 재생이 끝나면 리소스를 정리하고 임시 파일을 삭제.
 
 
+def detect_faces(frame, face_cascade):
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+    return faces
+
+이 함수는 프레임 내에서 얼굴을 감지하는 역할을 합니다.
+
+1. 컬러 이미지를 그레이스케일로 변환.
+
+
+2. detectMultiScale 함수를 사용하여 얼굴을 감지하고, 감지된 얼굴 좌표를 반환.
+
