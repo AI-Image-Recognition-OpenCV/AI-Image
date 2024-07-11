@@ -25,7 +25,8 @@ def yoloNet(image, net, output_layers, CONF_VALUE=0.5):
     blob = cv2.dnn.blobFromImage(image, 0.00392, (416, 416), swapRB=True, crop=False)
     net.setInput(blob)
     outs = net.forward(output_layers)
-
+```
+```
     persons_detected = False
 
     class_ids = []
@@ -63,7 +64,8 @@ def yoloNet(image, net, output_layers, CONF_VALUE=0.5):
         texttospeech("노란선 안으로 들어가세요.")
 
     return image
-
+```
+```
 #텍스트를 음성으로 변환하는 함수
 def texttospeech(text):
     # pyttsx3 엔진 초기화
@@ -85,14 +87,16 @@ def texttospeech(text):
     # 텍스트를 음성으로 변환
     engine.say(text)
     engine.runAndWait()
-
+```
+```
 #YOLO 모델 로드 및 파라미터 초기화
 yolo_weights = 'yolov3.weights'
 yolo_cfg = 'yolov3.cfg'
 net = cv2.dnn.readNetFromDarknet(yolo_cfg, yolo_weights)
 layer_names = net.getLayerNames()
 output_layers_indexes = net.getUnconnectedOutLayers()
-
+```
+```
 #출력 레이어 이름 가져오기
 output_layers = [layer_names[i - 1] for i in output_layers_indexes]
 
@@ -146,7 +150,8 @@ if last_combined_frame is not None:
         cv2.imshow('Original (top) and Object Detection (bottom)', last_combined_frame)
         if cv2.waitKey(1) & 0xFF == ord(' '):
             break
-
+```
+```
 #리소스 해제
 cap1.release()
 cap2.release()
