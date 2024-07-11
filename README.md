@@ -1,4 +1,4 @@
-#5C3EE8
+<img src = file:///C:/Users/User/Downloads/opencv-color.svg>
 # AI OpenCV 영상 처리 
 이 코드는 얼굴을 감지하고 얼굴 간의 거리를 측정하여 일정 거리 내로 접근했을 때 경고음을 재생하는 프로그램입니다. 주요 구성 요소별로 설명하겠습니다
 def text_to_speech(text, lang='ko'):
