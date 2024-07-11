@@ -66,6 +66,7 @@ def yoloNet(image, net, output_layers, CONF_VALUE=0.5):
 
     return image
 ```
+이미지에서 사람을 감지하고, 감지된 사람의 위치를 시각적으로 표시하며, 사람이 감지되었을 때 음성 경고를 출력하는 기능을 구현입니다
 ```
 #텍스트를 음성으로 변환하는 함수
 def texttospeech(text):
