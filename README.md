@@ -12,7 +12,7 @@
 + gTTS
 + pygame
 
-
+```
 import cv2
 import numpy as np
 import pyttsx3
@@ -144,7 +144,7 @@ if last_combined_frame is not None:
         cv2.imshow('Original (top) and Object Detection (bottom)', last_combined_frame)
         if cv2.waitKey(1) & 0xFF == ord(' '):
             break
-
+```
 #리소스 해제
 cap1.release()
 cap2.release()
